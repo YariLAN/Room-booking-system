@@ -1,0 +1,106 @@
+﻿<div data-cm-modal="login" class="cm-modal">
+    <div class="cm-modal__body p-16 px-24:md">
+        <div aria-label="Close" class="cm-modal__close">
+            <div class="svg-icon svg-icon--lg txt-secondary">
+                X
+            </div>
+        </div>
+        <div class="cm-h3 mt-0 mb-12 pr-16">Вход</div>
+        @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+        {
+            <div class="validation-error-style">@Html.ValidationMessage("notSignIn")</div>
+
+            <div class="cm-form-field mb-16">
+                <div class="cm-form-field__content">
+                    <input required="required" type="text" name="Login" placeholder="Email / Логин Timeweb" class="cm-control cm-control--lg">
+                </div>
+            </div>
+
+            <div class="cm-form-field mb-8 cm-form-field--icon">
+                <div class="cm-form-field__content">
+                    <input required="required" type="password" name="Pass" placeholder="Пароль" class="cm-control cm-control--lg">
+                    <div class="svg-icon svg-icon--field svg-icon--lg txt-secondary cur-p">
+                        <svg><use xlink:href="#eye"></use></svg>
+                    </div>
+                </div>
+            </div>
+            <div class="cm-form-field mb-8">
+                <div class="cm-form-field__content txt-r font-style-2">
+                    <a href="#">Забыли пароль?</a>
+                </div>
+            </div>
+
+            <div class="js-captcha-container"></div>
+            <div class="js-image-captcha-container"></div>
+            <div class="js-sms-container"></div>
+            <div class="cm-form-field mb-12">
+                <div class="cm-form-field__content">
+                    <button type="submit" class="button button--lg wd-1">Войти</button>
+                </div>
+            </div>
+            <div class="cm-form-field mb-12">
+                <div class="cm-form-field__content txt-c font-style-2">
+                    <span>У меня нет аккаунта</span>
+                    <a id="Registration" style="cursor:pointer;">Зарегистрироваться</a>
+                </div>
+            </div>
+            <div class="cm-form-field mb-0">
+            </div>
+        }
+    </div>
+</div>
+
+<div data-cm-modal="registration" class="cm-modal">
+    <div class="cm-modal__body p-16 px-24:md">
+        <div aria-label="Close" class="cm-modal__close">
+            <div class="svg-icon svg-icon--lg txt-secondary">
+                X
+            </div>
+        </div>
+        <div class="cm-h3 mt-0 mb-12 pr-16">Регистрация</div>
+        @using (Html.BeginForm("Registration", "Home", FormMethod.Post))
+        {
+            <div class="cm-form-field mb-16">
+
+                <span>@Html.ValidationMessage("alreadyRegistr")</span>
+
+                <div class="cm-form-field__content">
+                    <input type="text" id="registration_name" name="LastName" required="required" placeholder="Ваша фамилия" class="cm-control cm-control--lg">
+                </div>
+                <div class="cm-form-field__content">
+                    <input type="text" id="registration_name" name="FirstName" required="required" placeholder="Ваше имя" class="cm-control cm-control--lg">
+                </div>
+                <div class="cm-form-field__content">
+                    <input type="text" id="registration_name" name="MiddleName" required="required" placeholder="Ваше отчество" class="cm-control cm-control--lg">
+                </div>
+                <div class="cm-form-field__content">
+                    <input type="date" id="registration_email" name="DateOfBirth" required="required" placeholder="Дата рождения" class="cm-control cm-control--lg">
+                </div>
+
+            </div>
+
+            <div class="cm-form-field mb-16" style="margin-top: 30px;">
+
+                <div class="cm-form-field__content">
+                    <input type="text" name="Login" required="required" placeholder="Логин" class="cm-control user">
+                </div>
+                <div class="cm-form-field__content" style="margin-top: 14px;">
+                    <input type="password" name="Pass" required="required" placeholder="Пароль" class="cm-control user">
+                </div>
+
+            </div>
+            <div class="cm-form-field mb-12">
+                <div class="cm-form-field__content">
+                    <button type="submit" class="button button--lg wd-1">Зарегистрироваться</button>
+                </div>
+            </div>
+            <div class="cm-form-field mb-12">
+                <div class="cm-form-field__content txt-c font-style-2">
+                    <span>У меня уже есть аккаунт</span>
+                    <a id="logAccount" style="cursor:pointer;">Войти</a>
+                </div>
+            </div>
+            <input type="hidden" id="registration__token" name="registration[_token]" value="hWX6nE4v0fKqFN5GmBPm5UXxnvRG7eXu9sY_lYM10Xw">
+         }
+    </div>
+</div>

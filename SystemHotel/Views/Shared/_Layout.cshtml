@@ -1,0 +1,45 @@
+﻿
+<!DOCTYPE HTML>
+<!--
+    TXT by HTML5 UP
+    html5up.net | ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    @await Html.PartialAsync("MetaTagsPartial")
+    @await Html.PartialAsync("CssPartial")
+</head>
+<body class="is-preload">
+    @RenderBody()
+    <div id="page-wrapper">
+
+        <!-- Header -->
+        @await Html.PartialAsync("HeaderPartial")
+
+        <!-- Nav -->
+        @await Html.PartialAsync("Nav")
+
+
+        @await Html.PartialAsync("FormLoginRegistrPartial")
+
+        <!-- Main -->
+        @await Html.PartialAsync("MainPartial")
+
+        <!-- Footer -->
+        @await Html.PartialAsync("FooterPartial")
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/jquery.dropotron.min.js"></script>
+    <script src="~/js/jquery.scrolly.min.js"></script>
+    <script src="~/js/browser.min.js"></script>
+    <script src="~/js/breakpoints.min.js"></script>
+    <script src="~/js/util.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/login.js"></script>
+
+
+</body>
+</html>
