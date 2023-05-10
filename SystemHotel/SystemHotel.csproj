@@ -18,6 +18,10 @@
   <ItemGroup>
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
+    <None Include="Properties\serviceDependencies.local.json.user" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Hotel\actionHotelLayout.cshtml" />
+    <None Include="Views\Hotel\actionSearch.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

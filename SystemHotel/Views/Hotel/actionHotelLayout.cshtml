@@ -1,0 +1,41 @@
+﻿@model Task<SystemHotel.Models.ListsModels>
+
+<!DOCTYPE html>
+<html>
+<head>
+    @await Html.PartialAsync("../Shared/MetaTagsPartial")
+    @await Html.PartialAsync("../Shared/CssPartial")
+</head>
+<body>
+    <div>
+        @RenderBody()
+
+        <div id="page-wrapper">
+
+            <!-- Nav -->
+            @await Html.PartialAsync("../Shared/Nav")
+
+            @await Html.PartialAsync("../Shared/FormLoginRegistrPartial")
+
+            @using (Html.BeginForm("Search", "Hotel", FormMethod.Post))
+            {
+            <fieldset>
+
+                @Html.DropDownList("Список городов", Model.Result.listOfcountries)
+                @Html.DropDownList("Список городов", Model.Result.listOfcities)
+
+                <p>
+                    <input type="submit" value="Submit" />
+                </p>
+
+
+            </fieldset>
+            }
+
+        </div>
+
+    </div>
+    <!-- Scripts -->
+    @await Html.PartialAsync("../Shared/ScriptsPartial")
+</body>
+</html>

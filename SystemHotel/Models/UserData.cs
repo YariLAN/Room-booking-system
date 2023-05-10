@@ -30,7 +30,5 @@ namespace SystemHotel.Models
         {
             return (this.Login == obj);
         }
-
-
     }
 }

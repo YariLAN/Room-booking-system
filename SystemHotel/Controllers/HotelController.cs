@@ -1,49 +1,46 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SystemHotel.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SystemHotel.Controllers
 {
-    public class LoginAndPasswords : Controller
+    public class HotelController : Controller
     {
-        private readonly HotelContext _db;
+        private readonly FindHotelsService findHotels = new FindHotelsService(new HotelContext());
 
-        public LoginAndPasswords(HotelContext db)
+        // GET: Hotel_Controller
+        public ActionResult actionSearch()
         {
-            _db = db;
+            var adressTuple = findHotels.GetDropDownList();
+
+            return View(adressTuple);
         }
 
-        // GET: LoginAndPasswords
-        public ActionResult Index()
+        //public Task<IActionResult> Search()
+        //{
+
+        //}
+
+
+
+        // GET: Hotel_Controller/Details/5
+        public ActionResult Details(int id)
         {
             return View();
         }
 
-        // POST: LoginAndPasswords/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: LoginAndPasswords/Edit/5
+        // GET: Hotel_Controller/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: LoginAndPasswords/Edit/5
+        // POST: Hotel_Controller/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -58,13 +55,13 @@ namespace SystemHotel.Controllers
             }
         }
 
-        // GET: LoginAndPasswords/Delete/5
+        // GET: Hotel_Controller/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: LoginAndPasswords/Delete/5
+        // POST: Hotel_Controller/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

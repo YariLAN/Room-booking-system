@@ -37,6 +37,8 @@ namespace SystemHotel.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ModelStateMergeFilterAttribute]
+        [RestoreModelStateFromTempDataAttribute]
         public async Task<IActionResult> Registration(MainDataUser newUser, UserData logPass)
         {
             if (await this.UserService.IsRegistered(logPass))
@@ -45,5 +47,6 @@ namespace SystemHotel.Controllers
             await this.UserService.AddUserAsync(logPass, newUser);
             return RedirectToAction(nameof(Index), "Home");
         }
+
     }
 }

@@ -5,7 +5,9 @@
                 <div class="tm-main-menu__section">
                     <nav id="nav">
                         <ul>
-                            <li class="current"><a href="index.html">Home</a></li>
+                            <li class="current">
+                                @Html.ActionLink("Home", actionName: "Index", "Home")
+                            </li>
                             <li>
                                 <a href="#">Dropdown</a>
                                 <ul>
@@ -24,7 +26,9 @@
                                 </ul>
                             </li>
                             <li><a href="left-sidebar.html">Left Sidebar</a></li>
-                            <li><a href="right-sidebar.html">Отели</a></li>
+                            <li>
+                                @Html.ActionLink("Отели", actionName: "actionSearch", controllerName: "Hotel")
+                            </li>
                             <li><a href="right-sidebar.html">Контакты</a></li>
                         </ul>
                     </nav>
