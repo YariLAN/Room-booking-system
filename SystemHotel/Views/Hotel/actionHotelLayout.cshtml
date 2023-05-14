@@ -1,4 +1,4 @@
-﻿@model Task<SystemHotel.Models.ListsModels>
+﻿@model IEnumerable<SystemHotel.Cities>
 
 <!DOCTYPE html>
 <html>
@@ -20,14 +20,16 @@
             @using (Html.BeginForm("Search", "Hotel", FormMethod.Post))
             {
             <fieldset>
+                <h3>Выберите страну</h3>
 
-                @Html.DropDownList("Список городов", Model.Result.listOfcountries)
-                @Html.DropDownList("Список городов", Model.Result.listOfcities)
+                @Html.DropDownList("State", ViewBag.Regions as SelectList, new { id = "state" })
+
+                <h3>Выберите город</h3>
+                @Html.DropDownList("City", ViewBag.Cities as SelectList, new { id = "city" })
 
                 <p>
                     <input type="submit" value="Submit" />
                 </p>
-
 
             </fieldset>
             }

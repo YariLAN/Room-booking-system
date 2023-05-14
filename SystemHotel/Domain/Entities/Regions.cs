@@ -18,9 +18,9 @@ namespace SystemHotel
         public int RegionId { get; set; }
         public int FkCountryId { get; set; }
         public string RegionName { get; set; }
+        public virtual ICollection<Cities> Cities { get; set; }
 
         public virtual Countries FkCountry { get; set; }
-        public virtual ICollection<Cities> Cities { get; set; }
         public virtual ICollection<Hotels> Hotels { get; set; }
     }
 }

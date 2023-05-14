@@ -6,3 +6,23 @@
 <script src="~/js/util.js"></script>
 <script src="~/js/main.js"></script>
 <script src="~/js/login.js"></script>
+<script type="text/javascript">
+                    $(function () {
+
+                        $('#state').change(function()
+                        {
+                            // получаем выбранный id
+                            console.log($(this).val());
+                            var id = $(this).val();
+                            $.ajax({
+                                type: 'GET',
+                                url: '@Url.Action("GetItems")/' + id,
+                                success: function (data) {
+
+                                    // заменяем содержимое присланным частичным представлением
+                                    $('#city').replaceWith(data);
+                                }
+                            });
+                        });
+                    })
+</script>

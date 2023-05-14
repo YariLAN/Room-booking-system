@@ -8,7 +8,7 @@ namespace SystemHotel.Services
 {
     public class FindHotelsService
     {
-        private readonly HotelContext _dbContext;
+        public readonly HotelContext _dbContext;
         public static CityModel _cm;
         public static CountriesModel _countryModel;
 
@@ -21,8 +21,7 @@ namespace SystemHotel.Services
         {
             ListsModels lmodels = new ListsModels();
 
-            var listCity = await lmodels.CityToSelectListItem();
-            var listCountry = await lmodels.CountryToSelectListItem();
+            var lstModels = await lmodels.Inisializate();
 
             return lmodels;
         }

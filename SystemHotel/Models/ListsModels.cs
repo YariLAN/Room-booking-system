@@ -8,42 +8,18 @@ namespace SystemHotel.Models
 {
     public class ListsModels
     {
-        public List<SelectListItem> listOfcities { get; private set; }
-        public List<SelectListItem> listOfcountries { get; private set; }
+        public List<CityModel> listOfcities { get; private set; }
+        public List<RegionsModel> listOfregions { get; private set; }
 
-        public async Task<List<SelectListItem>> CityToSelectListItem()
+        public async Task<Tuple<List<CityModel>, List<RegionsModel>>> Inisializate()
         {
             var cm = new CityModel();
-            this.listOfcities = new List<SelectListItem>(); 
+            var rm = new RegionsModel();
 
-            var list = await cm.GetEntities();
-            foreach (var item in list)
-            {
-                this.listOfcities.Add(new SelectListItem
-                {
-                    Text = item.name,
-                    Value = item.id.ToString()
-                });
-            }
-            return this.listOfcities;
+            this.listOfcities = await cm.GetEntities();
+            this.listOfregions = await rm.GetEntities();
+
+            return Tuple.Create(listOfcities, listOfregions);
         }
-
-        public async Task<List<SelectListItem>> CountryToSelectListItem()
-        {
-            var cm = new CountriesModel();
-            this.listOfcountries = new List<SelectListItem>();
-
-            var list = await cm.GetEntities();
-            foreach (var item in list)
-            {
-                this.listOfcountries.Add(new SelectListItem
-                {
-                    Text = item.name,
-                    Value = item.id.ToString()
-                });
-            }
-            return this.listOfcountries;
-        }
-
     }
 }

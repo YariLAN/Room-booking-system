@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SystemHotel.Services;
+using SystemHotel.Models;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 
 namespace SystemHotel.Controllers
 {
@@ -15,17 +17,22 @@ namespace SystemHotel.Controllers
         // GET: Hotel_Controller
         public ActionResult actionSearch()
         {
-            var adressTuple = findHotels.GetDropDownList();
+            var lstModels = findHotels.GetDropDownList();
+            
+            int selectedIndex = 1;
 
-            return View(adressTuple);
+            ViewBag.Regions = new SelectList(
+                lstModels.Result.listOfregions, "Id", "Name", selectedIndex);
+            ViewBag.Cities = new SelectList(
+                lstModels.Result.listOfcities.Where(c => c.FkRegionId == selectedIndex), "Id", "Name");
+
+            return View();
         }
 
-        //public Task<IActionResult> Search()
-        //{
-
-        //}
-
-
+        public ActionResult GetItems(int id)
+        {
+            return PartialView(findHotels._dbContext.Cities.Where(c => c.FkRegionId == id).ToList());
+        }
 
         // GET: Hotel_Controller/Details/5
         public ActionResult Details(int id)

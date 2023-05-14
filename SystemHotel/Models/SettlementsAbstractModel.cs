@@ -5,8 +5,8 @@ namespace SystemHotel.Models
 {
     public abstract class SettlementsAbstractModel
     {
-        public int id { get; set; }
-        public string name { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
         public readonly HotelContext _dbContext;
 
         public SettlementsAbstractModel() {
@@ -14,8 +14,8 @@ namespace SystemHotel.Models
         }
         public SettlementsAbstractModel(int id, string name)
         {
-            this.id = id;
-            this.name = name;
+            this.Id = id;
+            this.Name = name;
         }
         public SettlementsAbstractModel(HotelContext dbContext)
         {
