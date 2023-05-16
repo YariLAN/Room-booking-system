@@ -10,16 +10,20 @@ namespace SystemHotel.Models
     {
         public List<CityModel> listOfcities { get; private set; }
         public List<RegionsModel> listOfregions { get; private set; }
+        public List<CountriesModel> listOfcountries { get; private set; }
 
-        public async Task<Tuple<List<CityModel>, List<RegionsModel>>> Inisializate()
+        public async Task<Tuple<List<CityModel>, List<RegionsModel>, List<CountriesModel>>> 
+            Inisializate()
         {
             var cm = new CityModel();
             var rm = new RegionsModel();
+            var gosm = new CountriesModel();
 
             this.listOfcities = await cm.GetEntities();
             this.listOfregions = await rm.GetEntities();
+            this.listOfcountries = await gosm.GetEntities();
 
-            return Tuple.Create(listOfcities, listOfregions);
+            return Tuple.Create(listOfcities, listOfregions, listOfcountries);
         }
     }
 }

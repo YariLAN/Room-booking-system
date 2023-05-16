@@ -5,15 +5,18 @@ using System.Threading.Tasks;
 
 namespace SystemHotel.Models
 {
-    public class RegionsModel: SettlementsAbstractModel
+    public class RegionsModel : SettlementsAbstractModel
     {
-        public RegionsModel(int id, string name) : base(id, name) { }
+        public int FkCountryId {get; set;}
         public RegionsModel() : base() { }
+        public RegionsModel(int id, string name, int fkRegionId) : base(id, name) {
+            this.FkCountryId = fkRegionId;
+        }
 
         public async Task<List<RegionsModel>> GetEntities()
         {
             return await _dbContext.Regions.Select(
-                    s => new RegionsModel(s.RegionId, s.RegionName)).ToListAsync();
+                    s => new RegionsModel(s.RegionId, s.RegionName, s.FkCountryId)).ToListAsync();
         }
     }
 }

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<SystemHotel.Hotels>
+
+<div id="window-hotel">
+    <table class="table" >
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StreetName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HouseNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HotelName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FkCity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FkCountry)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FkHotelCategoryNavigation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FkRegion)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody style="text-align:center;">
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StreetName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HouseNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HotelName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FkCity.CityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FkCountry.CountryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FkHotelCategoryNavigation.CategoryValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FkRegion.RegionName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.HotelId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.HotelId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.HotelId">Delete</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

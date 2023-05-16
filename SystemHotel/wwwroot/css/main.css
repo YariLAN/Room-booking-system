@@ -1008,7 +1008,16 @@ button,
   transition: background-color .2s ease-in-out;
   font-size: 1.25em;
   padding: 0.85em 1.85em;
-  text-align: center; }
+  text-align: center; 
+
+}
+
+input[type="button"].hotelFind {
+    background: rgb(0 145 93 / 21%);
+    border: solid 2px #1d6639f7;
+}
+
+
   input[type="button"]:hover,
   input[type="submit"]:hover,
   input[type="reset"]:hover,
@@ -1046,10 +1055,11 @@ button,
   .button.large {
     font-size: 1.65em; }
 
-/* List */
-ul {
-  list-style: disc;
-  padding-left: 1em; }
+    /* List */
+    ul {
+        list-style: disc;
+        padding-left: 1em;
+    }
   ul li {
     padding-left: 0.5em; }
 
@@ -2149,4 +2159,13 @@ input[type="date"] {
     padding: 5px;
     cursor: pointer;
     border-radius: 3px;
+}
+
+.form-list {
+    background: #a4b23329
+}
+
+.div-dropdown {
+    margin-top: 10px;
+
 }

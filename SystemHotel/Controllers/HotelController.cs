@@ -21,24 +21,49 @@ namespace SystemHotel.Controllers
             
             int selectedIndex = 1;
 
-            ViewBag.Regions = new SelectList(
-                lstModels.Result.listOfregions, "Id", "Name", selectedIndex);
-            ViewBag.Cities = new SelectList(
-                lstModels.Result.listOfcities.Where(c => c.FkRegionId == selectedIndex), "Id", "Name");
+            ViewBag.Countries = new SelectList(
+                lstModels.Result.listOfcountries, "Id", "Name", selectedIndex);
+
+            ViewBag.Regions = new SelectList(lstModels.Result.listOfregions.Where(
+                b => b.FkCountryId == selectedIndex || b.Id == 0), "Id", "Name", selectedIndex);
+
+            ViewBag.Cities = new SelectList(lstModels.Result.listOfcities.Where(
+                c => c.FkRegionId == selectedIndex || c.Id == 0), "Id", "Name");
 
             return View();
         }
 
-        public ActionResult GetItems(int id)
+        // GET: Hotel/GetCities/
+        public ActionResult GetCities(int id)
         {
-            return PartialView(findHotels._dbContext.Cities.Where(c => c.FkRegionId == id).ToList());
+            return PartialView(findHotels._dbContext.Cities.Where(
+                c => c.FkRegionId == id || c.CityId == 0).ToList());
         }
 
-        // GET: Hotel_Controller/Details/5
+        // GET: Hotel/GetCountries/
+        public ActionResult GetRegions(int id)
+        {
+            return PartialView(findHotels._dbContext.Regions.Where(
+                c => c.FkCountryId == id || c.RegionId == 0).ToList());
+        }
+
+        // GET: Hotel/Search
+        public ActionResult Search(int id)
+        {
+            return PartialView(findHotels._dbContext.Hotels.Where(s => s.FkCityId == id).ToList());
+        }
+
+        
+        
+        
+        // GET: Hotel/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
+
+
+
 
 
         // GET: Hotel_Controller/Edit/5

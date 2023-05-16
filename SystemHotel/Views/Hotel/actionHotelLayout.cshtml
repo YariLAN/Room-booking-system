@@ -6,7 +6,7 @@
     @await Html.PartialAsync("../Shared/MetaTagsPartial")
     @await Html.PartialAsync("../Shared/CssPartial")
 </head>
-<body>
+<body style="background: #eaffd3;">
     <div>
         @RenderBody()
 
@@ -17,24 +17,36 @@
 
             @await Html.PartialAsync("../Shared/FormLoginRegistrPartial")
 
-            @using (Html.BeginForm("Search", "Hotel", FormMethod.Post))
+            @using (Html.BeginForm("Search", "Hotel", FormMethod.Post, new { @class = "form-list" }))
             {
-            <fieldset>
-                <h3>Выберите страну</h3>
+            <fieldset style="padding: 5px 40px; margin-top: 10px;">
 
-                @Html.DropDownList("State", ViewBag.Regions as SelectList, new { id = "state" })
+                <div class="div-dropdown">
+                    <h6>Выберите город</h6>
+                    @Html.DropDownList("Country", ViewBag.Countries as SelectList, new { id = "country" })
+                </div>
 
-                <h3>Выберите город</h3>
-                @Html.DropDownList("City", ViewBag.Cities as SelectList, new { id = "city" })
+                <div class="div-dropdown">
+                    <h6>Выберите регион</h6>
+                    @Html.DropDownList("Region", ViewBag.Regions as SelectList, new { id = "region" })
+                </div>
+
+                <div class="div-dropdown" style="margin-bottom: 15px;">
+                    <h6>Выберите город</h6>
+                    @Html.DropDownList("City", ViewBag.Cities as SelectList, new { id = "city" })
+                </div>
 
                 <p>
-                    <input type="submit" value="Submit" />
+                    <input id="searchHotel" type="button" value="Submit" class="hotelFind" />
                 </p>
-
             </fieldset>
             }
+            <div id="window-hotel"></div>
+            
 
         </div>
+
+
 
     </div>
     <!-- Scripts -->
