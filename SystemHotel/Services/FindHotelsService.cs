@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using SystemHotel.Models;
 
 namespace SystemHotel.Services
@@ -21,6 +24,13 @@ namespace SystemHotel.Services
             var lstModels = await lmodels.Inisializate();
 
             return lmodels;
+        }
+
+        public List<HotelModel> GetHotels()
+        {
+            return _dbContext.Hotels.Select
+              (s => new HotelModel(s.HotelId, s.HotelName, s.FkCityId, s.StreetName, s.HouseNumber))
+                .ToList();
         }
     }
 }

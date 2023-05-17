@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SystemHotel.Hotels>
+﻿@model IEnumerable<SystemHotel.Models.HotelModel>
 
 <div id="window-hotel">
     <table class="table" >
@@ -11,19 +11,10 @@
                     @Html.DisplayNameFor(model => model.HouseNumber)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.HotelName)
+                    @Html.DisplayNameFor(model => model.Name)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.FkCity)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FkCountry)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FkHotelCategoryNavigation)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FkRegion)
+                    @Html.DisplayNameFor(model => model.Img.Name)
                 </th>
                 <th></th>
             </tr>
@@ -38,24 +29,15 @@
                     @Html.DisplayFor(modelItem => item.HouseNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.HotelName)
+                    @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FkCity.CityName)
+                    <img src="~/img/@item.Img.Name" class="imgHotel"/>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FkCountry.CountryName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FkHotelCategoryNavigation.CategoryValue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FkRegion.RegionName)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.HotelId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.HotelId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.HotelId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }

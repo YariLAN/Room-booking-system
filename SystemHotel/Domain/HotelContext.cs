@@ -20,6 +20,7 @@ namespace SystemHotel
         public virtual DbSet<Cities> Cities { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
         public virtual DbSet<Hotels> Hotels { get; set; }
+        public virtual DbSet<Images> Images { get; set; }
         public virtual DbSet<NumbersOfHotel> NumbersOfHotel { get; set; }
         public virtual DbSet<Regions> Regions { get; set; }
         public virtual DbSet<TypeRoom> TypeRoom { get; set; }
@@ -43,8 +44,9 @@ namespace SystemHotel
 
                 entity.Property(e => e.UserId)
                     .HasColumnName("user_id")
-                    .ValueGeneratedOnAdd();
-                   
+                    //.ValueGeneratedOnAdd();
+                    .UseIdentityAlwaysColumn();
+
                 entity.Property(e => e.Login)
                     .IsRequired()
                     .HasColumnName("login");
@@ -82,6 +84,7 @@ namespace SystemHotel
                     .HasMaxLength(64);
 
                 entity.Property(e => e.MiddleName)
+                    .IsRequired() //
                     .HasColumnName("middle_name")
                     .HasMaxLength(64);
 
@@ -149,6 +152,7 @@ namespace SystemHotel
 
                 entity.Property(e => e.CityId)
                     .HasColumnName("city_id")
+                    .HasIdentityOptions(null, null, 0L, null, null, null)
                     .UseIdentityAlwaysColumn();
 
                 entity.Property(e => e.CityName)
@@ -161,7 +165,7 @@ namespace SystemHotel
                 entity.HasOne(d => d.FkRegion)
                     .WithMany(p => p.Cities)
                     .HasForeignKey(d => d.FkRegionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    //.OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("cities_fk_region_id_fkey");
             });
 
@@ -174,7 +178,7 @@ namespace SystemHotel
 
                 entity.Property(e => e.CountryId)
                     .HasColumnName("country_id")
-                    .UseIdentityAlwaysColumn();
+                    .HasIdentityOptions(null, null, 0L, null, null, null);
 
                 entity.Property(e => e.CountryName)
                     .IsRequired()
@@ -237,6 +241,30 @@ namespace SystemHotel
                     .HasConstraintName("hotels_fk_region_id_fkey");
             });
 
+            modelBuilder.Entity<Images>(entity =>
+            {
+                entity.HasKey(e => e.ImageId)
+                    .HasName("images_pkey");
+
+                entity.ToTable("images");
+
+                entity.Property(e => e.ImageId)
+                    .HasColumnName("image_id")
+                    .UseIdentityAlwaysColumn();
+
+                entity.Property(e => e.FkCityId).HasColumnName("fk_city_id");
+
+                entity.Property(e => e.ImageName)
+                    .IsRequired()
+                    .HasColumnName("image_name");
+
+                entity.HasOne(d => d.FkCity)
+                    .WithMany(p => p.Images)
+                    .HasForeignKey(d => d.FkCityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("images_fk_city_id_fkey");
+            });
+
             modelBuilder.Entity<NumbersOfHotel>(entity =>
             {
                 entity.HasKey(e => e.NumberId)
@@ -284,7 +312,7 @@ namespace SystemHotel
 
                 entity.Property(e => e.RegionId)
                     .HasColumnName("region_id")
-                    .UseIdentityAlwaysColumn();
+                    .HasIdentityOptions(null, null, 0L, null, null, null);
 
                 entity.Property(e => e.FkCountryId).HasColumnName("fk_country_id");
 

@@ -50,7 +50,8 @@ namespace SystemHotel.Controllers
         // GET: Hotel/Search
         public ActionResult Search(int id)
         {
-            return PartialView(findHotels._dbContext.Hotels.Where(s => s.FkCityId == id).ToList());
+            var hotel = findHotels.GetHotels();
+            return PartialView(hotel.Where(s => s.FkCityId == id).ToList());
         }
 
         
@@ -61,9 +62,6 @@ namespace SystemHotel.Controllers
         {
             return View();
         }
-
-
-
 
 
         // GET: Hotel_Controller/Edit/5

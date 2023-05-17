@@ -19,5 +19,6 @@ namespace SystemHotel
 
         public virtual Regions FkRegion { get; set; }
         public virtual ICollection<Hotels> Hotels { get; set; }
+        public virtual ICollection<Images> Images { get; set; }
     }
 }

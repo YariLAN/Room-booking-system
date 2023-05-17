@@ -2169,3 +2169,20 @@ input[type="date"] {
     margin-top: 10px;
 
 }
+
+#window-hotel {
+    padding: 10px 30px;
+    margin-top: 10px;
+}
+
+.imgHotel {
+    width: 30%;
+    margin-top: 8px;
+    vertical-align: middle;
+}
+
+@media (max-width:1280px) {
+    .imgHotel {
+        width: 50%;
+    }
+}
