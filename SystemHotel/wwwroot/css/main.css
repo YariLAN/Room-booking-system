@@ -2177,7 +2177,6 @@ input[type="date"] {
 
 .imgHotel {
     width: 30%;
-    margin-top: 8px;
     vertical-align: middle;
 }
 
@@ -2185,4 +2184,13 @@ input[type="date"] {
     .imgHotel {
         width: 50%;
     }
+}
+
+.current {
+    background: rgb(222 241 190);
+    opacity: 80%;
+}
+
+.result-Search-Hotel {
+    opacity: 100%;
 }

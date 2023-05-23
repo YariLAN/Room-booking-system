@@ -21,7 +21,7 @@
         </thead>
         <tbody style="text-align:center;">
         @foreach (var item in Model) {
-            <tr>
+            <tr class ="result-Search-Hotel">
                 <td>
                     @Html.DisplayFor(modelItem => item.StreetName)
                 </td>
@@ -32,7 +32,9 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    <img src="~/img/@item.Img.Name" class="imgHotel"/>
+                    <a href="Booking/@item.Id">
+                        <img src="~/img/@item.Img.Name" class="imgHotel" />
+                    </a>
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

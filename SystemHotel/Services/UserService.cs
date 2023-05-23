@@ -6,14 +6,9 @@ using System.Collections.Generic;
 
 namespace SystemHotel.Services
 {
-    public class UserService
+    public class UserService: HotelContext
     {
-        private readonly HotelContext DbContext;
-
-        public UserService(HotelContext DbContext)
-        {
-            this.DbContext = DbContext;
-        }
+        public UserService(): base() {}
 
         public async Task AddUserAsync(UserData logPass, MainDataUser mainDataUser)
         {
@@ -23,8 +18,8 @@ namespace SystemHotel.Services
                 Login = logPass.Login,
                 Pass = logPass.GetHashToPassword(),
             };
-            DbContext.UsLoginAndPasswords.Add(entity);
-            await DbContext.SaveChangesAsync();
+            this.UsLoginAndPasswords.Add(entity);
+            await this.SaveChangesAsync();
 
             var main = new UsMainData()
             {
@@ -35,14 +30,13 @@ namespace SystemHotel.Services
                 FkUser = entity,
                 //FkUserId = entity.UserId,
             };
-
-            DbContext.UsMainDatas.Add(main);
-            await DbContext.SaveChangesAsync();
+            this.UsMainDatas.Add(main);
+            await this.SaveChangesAsync();
         }
 
         public async Task<List<UserData>> GetAllLoginPasswords()
         {
-            return await DbContext.UsLoginAndPasswords.Select(
+            return await this.UsLoginAndPasswords.Select(
                     s => new UserData
                     {
                         UserId = s.UserId,
@@ -54,7 +48,7 @@ namespace SystemHotel.Services
 
         public async Task<UserData> GetLoginPassword(string login)
         {
-            return await DbContext.UsLoginAndPasswords.Select(
+            return await this.UsLoginAndPasswords.Select(
                     s => new UserData
                     {
                         UserId = s.UserId,

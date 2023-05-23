@@ -12,8 +12,9 @@ namespace SystemHotel.Controllers
 {
     public class HotelController : Controller
     {
-        private readonly FindHotelsService findHotels = new FindHotelsService(new HotelContext());
-
+        private readonly FindHotelsService findHotels = new FindHotelsService();
+        private readonly NumbersHotelService numbersHotel = new NumbersHotelService();
+       
         // GET: Hotel_Controller
         public ActionResult actionSearch()
         {
@@ -36,14 +37,14 @@ namespace SystemHotel.Controllers
         // GET: Hotel/GetCities/
         public ActionResult GetCities(int id)
         {
-            return PartialView(findHotels._dbContext.Cities.Where(
+            return PartialView(findHotels.Cities.Where(
                 c => c.FkRegionId == id || c.CityId == 0).ToList());
         }
 
         // GET: Hotel/GetCountries/
         public ActionResult GetRegions(int id)
         {
-            return PartialView(findHotels._dbContext.Regions.Where(
+            return PartialView(findHotels.Regions.Where(
                 c => c.FkCountryId == id || c.RegionId == 0).ToList());
         }
 
@@ -54,9 +55,17 @@ namespace SystemHotel.Controllers
             return PartialView(hotel.Where(s => s.FkCityId == id).ToList());
         }
 
-        
-        
-        
+        // GET: Hotel/Booking/?HotelId
+        [HttpGet]
+        public ActionResult Booking(int Id)
+        {
+            var num = numbersHotel.GetModels(Id);
+
+            return View(num.Result.Where(s => s.FkHotelId == Id).ToList());
+        }
+
+
+
         // GET: Hotel/Details/5
         public ActionResult Details(int id)
         {

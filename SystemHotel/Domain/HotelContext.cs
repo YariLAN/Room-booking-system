@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using SystemHotel.Models;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -97,9 +98,14 @@ namespace SystemHotel
 
             modelBuilder.Entity<BookedRoom>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.BookedId)
+                    .HasName("booked_room_pkey");
 
                 entity.ToTable("booked_room");
+
+                entity.Property(e => e.BookedId)
+                    .HasColumnName("booked_id")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.DateCheckIn)
                     .HasColumnName("date_check_in")
@@ -114,13 +120,13 @@ namespace SystemHotel
                 entity.Property(e => e.FkUserId).HasColumnName("fk_user_id");
 
                 entity.HasOne(d => d.FkNumbersOfHotelNavigation)
-                    .WithMany()
+                    .WithMany(p => p.BookedRoom)
                     .HasForeignKey(d => d.FkNumbersOfHotel)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("booked_room_fk_numbers_of_hotel_fkey");
 
                 entity.HasOne(d => d.FkUser)
-                    .WithMany()
+                    .WithMany(p => p.BookedRoom)
                     .HasForeignKey(d => d.FkUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("booked_room_fk_user_id_fkey");
@@ -346,5 +352,9 @@ namespace SystemHotel
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<BookedRoomModel> BookedRoomModel { get; set; }
+
+        public DbSet<NumbersOfHotelModel> NumbersOfHotelModel { get; set; }
     }
 }

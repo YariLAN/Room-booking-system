@@ -12,8 +12,7 @@ namespace SystemHotel.Models
         public List<RegionsModel> listOfregions { get; private set; }
         public List<CountriesModel> listOfcountries { get; private set; }
 
-        public async Task<Tuple<List<CityModel>, List<RegionsModel>, List<CountriesModel>>> 
-            Inisializate()
+        public async Task Inisializate()
         {
             var cm = new CityModel();
             var rm = new RegionsModel();
@@ -23,7 +22,7 @@ namespace SystemHotel.Models
             this.listOfregions = await rm.GetEntities();
             this.listOfcountries = await gosm.GetEntities();
 
-            return Tuple.Create(listOfcities, listOfregions, listOfcountries);
+            return;
         }
     }
 }

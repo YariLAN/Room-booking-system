@@ -7,7 +7,7 @@ namespace SystemHotel.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly UserService UserService = new UserService(new HotelContext());
+        private readonly UserService UserService = new UserService();
 
         [ModelStateMergeFilter]
         [RestoreModelStateFromTempDataAttribute]

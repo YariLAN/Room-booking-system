@@ -6,29 +6,25 @@ using SystemHotel.Models;
 
 namespace SystemHotel.Services
 {
-    public class FindHotelsService
+    public class FindHotelsService: HotelContext
     {
-        public readonly HotelContext _dbContext;
         public static CityModel _cm;
         public static CountriesModel _countryModel;
 
-        public FindHotelsService(HotelContext dbContext)
-        {
-            this._dbContext = dbContext;
-        }
+        public FindHotelsService(): base() {}
 
         public async Task<ListsModels> GetDropDownList()
         {
             ListsModels lmodels = new ListsModels();
 
-            var lstModels = await lmodels.Inisializate();
+            await lmodels.Inisializate();
 
             return lmodels;
         }
 
         public List<HotelModel> GetHotels()
         {
-            return _dbContext.Hotels.Select
+            return this.Hotels.Select
               (s => new HotelModel(s.HotelId, s.HotelName, s.FkCityId, s.StreetName, s.HouseNumber))
                 .ToList();
         }
