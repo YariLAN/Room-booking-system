@@ -10,7 +10,7 @@ namespace SystemHotel.Services
     {
         public NumbersHotelService(): base() { }
 
-        public async Task<List<NumbersOfHotelModel>> GetModels(int Id)
+        public async Task<List<NumbersOfHotelModel>> GetNumbersHotel(int Id)
         {
             return await this.NumbersOfHotel.Select(
                 s => new NumbersOfHotelModel(
@@ -18,7 +18,5 @@ namespace SystemHotel.Services
                     s.FkTypeRoom, s.AmountSeats, s.Price, s.Isavaiable)
                 ).ToListAsync();
         }
-
-
     }
 }

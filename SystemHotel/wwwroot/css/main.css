@@ -1272,7 +1272,9 @@ form ::-moz-focus-inner {
 
 /* Tables */
 table {
-  width: 100%; }
+  width: 100%; 
+  text-align:center;
+}
   table.default {
     width: 100%; }
     table.default tr {
@@ -2193,4 +2195,56 @@ input[type="date"] {
 
 .result-Search-Hotel {
     opacity: 100%;
+}
+
+.table-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+    gap: 1px 0px;
+    grid-template-areas: none;
+    border-top: 20px solid #e4f7c2;
+    padding: 40px 50px;
+}
+
+div.table-container p {
+    margin-bottom: 2px;
+}
+
+div.table-container div {
+    text-align: center;
+    margin: 5px 12px 15px 12px;
+    border: 2px solid green;
+    padding: 10px;
+    background: rgb(148 255 74 / 30%);
+}
+
+div.table-container p span{
+    background: red;
+    color: white;
+}
+
+.flex-box-booking {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+form.flex-box-booking div {
+    margin-top: 0px;
+}
+
+#searchNum {
+    padding: 8px;
+    position: relative;
+    font-family: "Roboto Mono", monospace;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    margin-left: 2px;
+    background: rgb(228, 248, 191);
+    transform: translate(0%,0%);
+    color: black;
 }

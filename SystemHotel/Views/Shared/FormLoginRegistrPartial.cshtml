@@ -9,7 +9,7 @@
         @using (Html.BeginForm("Login", "Home", FormMethod.Post))
         {
             <div class="validation-error-style">@Html.ValidationMessage("notSignIn")</div>
-
+            
             <div class="cm-form-field mb-16">
                 <div class="cm-form-field__content">
                     <input required="required" type="text" name="Login" placeholder="Email / Логин Timeweb" class="cm-control cm-control--lg">

@@ -5,30 +5,7 @@
 -- Dumped from database version 15.2
 -- Dumped by pg_dump version 15.2
 
--- Started on 2023-05-17 23:13:29
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- TOC entry 3420 (class 1262 OID 24608)
--- Name: Hotel; Type: DATABASE; Schema: -; Owner: admin
---
-
-CREATE DATABASE "Hotel" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'Russian_Russia.1251';
-
-
-ALTER DATABASE "Hotel" OWNER TO admin;
-
-\connect "Hotel"
+-- Started on 2023-05-25 04:16:41
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -54,11 +31,27 @@ CREATE TABLE public.booked_room (
     fk_numbers_of_hotel integer NOT NULL,
     fk_user_id integer NOT NULL,
     date_check_in date NOT NULL,
-    date_check_out date NOT NULL
+    date_check_out date NOT NULL,
+    booked_id integer NOT NULL
 );
 
 
 ALTER TABLE public.booked_room OWNER TO postgres;
+
+--
+-- TOC entry 234 (class 1259 OID 49371)
+-- Name: booked_room_booked_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.booked_room ALTER COLUMN booked_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.booked_room_booked_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
 
 --
 -- TOC entry 223 (class 1259 OID 32898)
@@ -345,15 +338,16 @@ CREATE TABLE public.us_main_data (
 ALTER TABLE public.us_main_data OWNER TO postgres;
 
 --
--- TOC entry 3410 (class 0 OID 32950)
+-- TOC entry 3413 (class 0 OID 32950)
 -- Dependencies: 229
 -- Data for Name: booked_room; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.booked_room (fk_numbers_of_hotel, fk_user_id, date_check_in, date_check_out, booked_id) OVERRIDING SYSTEM VALUE VALUES (18, 1, '2023-05-14', '2023-05-22', 1);
 
 
 --
--- TOC entry 3404 (class 0 OID 32898)
+-- TOC entry 3407 (class 0 OID 32898)
 -- Dependencies: 223
 -- Data for Name: categotyofhotels; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -366,7 +360,7 @@ INSERT INTO public.categotyofhotels (category_id, category_value) OVERRIDING SYS
 
 
 --
--- TOC entry 3400 (class 0 OID 32884)
+-- TOC entry 3403 (class 0 OID 32884)
 -- Dependencies: 219
 -- Data for Name: cities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2607,7 +2601,7 @@ INSERT INTO public.cities (city_id, fk_region_id, city_name) OVERRIDING SYSTEM V
 
 
 --
--- TOC entry 3398 (class 0 OID 32869)
+-- TOC entry 3401 (class 0 OID 32869)
 -- Dependencies: 217
 -- Data for Name: countries; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2618,7 +2612,7 @@ INSERT INTO public.countries (country_id, country_name) VALUES (0, 'Не ука�
 
 
 --
--- TOC entry 3405 (class 0 OID 32903)
+-- TOC entry 3408 (class 0 OID 32903)
 -- Dependencies: 224
 -- Data for Name: hotels; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2628,7 +2622,7 @@ INSERT INTO public.hotels (hotel_id, fk_country_id, fk_region_id, fk_city_id, st
 
 
 --
--- TOC entry 3413 (class 0 OID 41165)
+-- TOC entry 3416 (class 0 OID 41165)
 -- Dependencies: 232
 -- Data for Name: images; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2638,7 +2632,7 @@ INSERT INTO public.images (image_id, fk_city_id, image_name) VALUES (2, 806, '80
 
 
 --
--- TOC entry 3409 (class 0 OID 32935)
+-- TOC entry 3412 (class 0 OID 32935)
 -- Dependencies: 228
 -- Data for Name: numbers_of_hotel; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2668,7 +2662,7 @@ INSERT INTO public.numbers_of_hotel (number_id, fk_hotel_id, floor_number, numbe
 
 
 --
--- TOC entry 3399 (class 0 OID 32874)
+-- TOC entry 3402 (class 0 OID 32874)
 -- Dependencies: 218
 -- Data for Name: regions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2766,7 +2760,7 @@ INSERT INTO public.regions (region_id, fk_country_id, region_name) VALUES (0, 0,
 
 
 --
--- TOC entry 3408 (class 0 OID 32930)
+-- TOC entry 3411 (class 0 OID 32930)
 -- Dependencies: 227
 -- Data for Name: type_room; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2783,7 +2777,7 @@ INSERT INTO public.type_room (type_room_id, type_room_name) OVERRIDING SYSTEM VA
 
 
 --
--- TOC entry 3395 (class 0 OID 32820)
+-- TOC entry 3398 (class 0 OID 32820)
 -- Dependencies: 214
 -- Data for Name: us_login_and_password; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2792,7 +2786,7 @@ INSERT INTO public.us_login_and_password (user_id, login, pass) OVERRIDING SYSTE
 
 
 --
--- TOC entry 3396 (class 0 OID 32827)
+-- TOC entry 3399 (class 0 OID 32827)
 -- Dependencies: 215
 -- Data for Name: us_main_data; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2801,7 +2795,16 @@ INSERT INTO public.us_main_data (fk_user_id, last_name, first_name, middle_name,
 
 
 --
--- TOC entry 3421 (class 0 OID 0)
+-- TOC entry 3424 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: booked_room_booked_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.booked_room_booked_id_seq', 1, true);
+
+
+--
+-- TOC entry 3425 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: categotyofhotels_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -2810,7 +2813,7 @@ SELECT pg_catalog.setval('public.categotyofhotels_category_id_seq', 5, true);
 
 
 --
--- TOC entry 3422 (class 0 OID 0)
+-- TOC entry 3426 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: cities_city_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -2819,7 +2822,7 @@ SELECT pg_catalog.setval('public.cities_city_id_seq', 0, false);
 
 
 --
--- TOC entry 3423 (class 0 OID 0)
+-- TOC entry 3427 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: countries_country_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -2828,7 +2831,7 @@ SELECT pg_catalog.setval('public.countries_country_id_seq', 0, false);
 
 
 --
--- TOC entry 3424 (class 0 OID 0)
+-- TOC entry 3428 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: hotels_hotel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -2837,7 +2840,7 @@ SELECT pg_catalog.setval('public.hotels_hotel_id_seq', 2, true);
 
 
 --
--- TOC entry 3425 (class 0 OID 0)
+-- TOC entry 3429 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: images_image_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -2846,7 +2849,7 @@ SELECT pg_catalog.setval('public.images_image_id_seq', 1, true);
 
 
 --
--- TOC entry 3426 (class 0 OID 0)
+-- TOC entry 3430 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: numbers_of_hotel_number_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -2855,7 +2858,7 @@ SELECT pg_catalog.setval('public.numbers_of_hotel_number_id_seq', 22, true);
 
 
 --
--- TOC entry 3427 (class 0 OID 0)
+-- TOC entry 3431 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: regions_region_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -2864,7 +2867,7 @@ SELECT pg_catalog.setval('public.regions_region_id_seq', 0, false);
 
 
 --
--- TOC entry 3428 (class 0 OID 0)
+-- TOC entry 3432 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: type_room_type_room_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -2873,7 +2876,7 @@ SELECT pg_catalog.setval('public.type_room_type_room_id_seq', 9, true);
 
 
 --
--- TOC entry 3429 (class 0 OID 0)
+-- TOC entry 3433 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: us_login_and_password_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -2882,7 +2885,16 @@ SELECT pg_catalog.setval('public.us_login_and_password_user_id_seq', 1, true);
 
 
 --
--- TOC entry 3232 (class 2606 OID 32902)
+-- TOC entry 3241 (class 2606 OID 49370)
+-- Name: booked_room booked_room_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.booked_room
+    ADD CONSTRAINT booked_room_pkey PRIMARY KEY (booked_id);
+
+
+--
+-- TOC entry 3233 (class 2606 OID 32902)
 -- Name: categotyofhotels categotyofhotels_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2891,7 +2903,7 @@ ALTER TABLE ONLY public.categotyofhotels
 
 
 --
--- TOC entry 3230 (class 2606 OID 32888)
+-- TOC entry 3231 (class 2606 OID 32888)
 -- Name: cities cities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2900,7 +2912,7 @@ ALTER TABLE ONLY public.cities
 
 
 --
--- TOC entry 3226 (class 2606 OID 32873)
+-- TOC entry 3227 (class 2606 OID 32873)
 -- Name: countries countries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2909,7 +2921,7 @@ ALTER TABLE ONLY public.countries
 
 
 --
--- TOC entry 3234 (class 2606 OID 32907)
+-- TOC entry 3235 (class 2606 OID 32907)
 -- Name: hotels hotels_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2918,7 +2930,7 @@ ALTER TABLE ONLY public.hotels
 
 
 --
--- TOC entry 3240 (class 2606 OID 41171)
+-- TOC entry 3243 (class 2606 OID 41171)
 -- Name: images images_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2927,7 +2939,7 @@ ALTER TABLE ONLY public.images
 
 
 --
--- TOC entry 3238 (class 2606 OID 32939)
+-- TOC entry 3239 (class 2606 OID 32939)
 -- Name: numbers_of_hotel numbers_of_hotel_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2936,7 +2948,7 @@ ALTER TABLE ONLY public.numbers_of_hotel
 
 
 --
--- TOC entry 3228 (class 2606 OID 32878)
+-- TOC entry 3229 (class 2606 OID 32878)
 -- Name: regions regions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2945,7 +2957,7 @@ ALTER TABLE ONLY public.regions
 
 
 --
--- TOC entry 3236 (class 2606 OID 32934)
+-- TOC entry 3237 (class 2606 OID 32934)
 -- Name: type_room type_room_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2954,7 +2966,7 @@ ALTER TABLE ONLY public.type_room
 
 
 --
--- TOC entry 3222 (class 2606 OID 32826)
+-- TOC entry 3223 (class 2606 OID 32826)
 -- Name: us_login_and_password us_login_and_password_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2963,7 +2975,7 @@ ALTER TABLE ONLY public.us_login_and_password
 
 
 --
--- TOC entry 3224 (class 2606 OID 32831)
+-- TOC entry 3225 (class 2606 OID 32831)
 -- Name: us_main_data us_main_data_fk_user_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2972,7 +2984,7 @@ ALTER TABLE ONLY public.us_main_data
 
 
 --
--- TOC entry 3250 (class 2606 OID 32953)
+-- TOC entry 3253 (class 2606 OID 32953)
 -- Name: booked_room booked_room_fk_numbers_of_hotel_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2981,7 +2993,7 @@ ALTER TABLE ONLY public.booked_room
 
 
 --
--- TOC entry 3251 (class 2606 OID 32958)
+-- TOC entry 3254 (class 2606 OID 32958)
 -- Name: booked_room booked_room_fk_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2990,7 +3002,7 @@ ALTER TABLE ONLY public.booked_room
 
 
 --
--- TOC entry 3243 (class 2606 OID 32889)
+-- TOC entry 3246 (class 2606 OID 32889)
 -- Name: cities cities_fk_region_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2999,7 +3011,7 @@ ALTER TABLE ONLY public.cities
 
 
 --
--- TOC entry 3244 (class 2606 OID 32918)
+-- TOC entry 3247 (class 2606 OID 32918)
 -- Name: hotels hotels_fk_city_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3008,7 +3020,7 @@ ALTER TABLE ONLY public.hotels
 
 
 --
--- TOC entry 3245 (class 2606 OID 32908)
+-- TOC entry 3248 (class 2606 OID 32908)
 -- Name: hotels hotels_fk_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3017,7 +3029,7 @@ ALTER TABLE ONLY public.hotels
 
 
 --
--- TOC entry 3246 (class 2606 OID 32923)
+-- TOC entry 3249 (class 2606 OID 32923)
 -- Name: hotels hotels_fk_hotel_category_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3026,7 +3038,7 @@ ALTER TABLE ONLY public.hotels
 
 
 --
--- TOC entry 3247 (class 2606 OID 32913)
+-- TOC entry 3250 (class 2606 OID 32913)
 -- Name: hotels hotels_fk_region_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3035,7 +3047,7 @@ ALTER TABLE ONLY public.hotels
 
 
 --
--- TOC entry 3252 (class 2606 OID 41172)
+-- TOC entry 3255 (class 2606 OID 41172)
 -- Name: images images_fk_city_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3044,7 +3056,7 @@ ALTER TABLE ONLY public.images
 
 
 --
--- TOC entry 3248 (class 2606 OID 32940)
+-- TOC entry 3251 (class 2606 OID 32940)
 -- Name: numbers_of_hotel numbers_of_hotel_fk_hotel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3053,7 +3065,7 @@ ALTER TABLE ONLY public.numbers_of_hotel
 
 
 --
--- TOC entry 3249 (class 2606 OID 32945)
+-- TOC entry 3252 (class 2606 OID 32945)
 -- Name: numbers_of_hotel numbers_of_hotel_fk_type_room_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3062,7 +3074,7 @@ ALTER TABLE ONLY public.numbers_of_hotel
 
 
 --
--- TOC entry 3242 (class 2606 OID 32879)
+-- TOC entry 3245 (class 2606 OID 32879)
 -- Name: regions regions_fk_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3071,7 +3083,7 @@ ALTER TABLE ONLY public.regions
 
 
 --
--- TOC entry 3241 (class 2606 OID 32832)
+-- TOC entry 3244 (class 2606 OID 32832)
 -- Name: us_main_data us_main_data_fk_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3079,7 +3091,7 @@ ALTER TABLE ONLY public.us_main_data
     ADD CONSTRAINT us_main_data_fk_user_id_fkey FOREIGN KEY (fk_user_id) REFERENCES public.us_login_and_password(user_id);
 
 
--- Completed on 2023-05-17 23:13:30
+-- Completed on 2023-05-25 04:16:41
 
 --
 -- PostgreSQL database dump complete

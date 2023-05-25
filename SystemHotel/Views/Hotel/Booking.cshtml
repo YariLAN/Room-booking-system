@@ -5,75 +5,71 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Booking</title>
+    @await Html.PartialAsync("../Shared/MetaTagsPartial")
+    @await Html.PartialAsync("../Shared/CssPartial")
 </head>
 <body>
-<p>
-    <a asp-action="Create">Номера отеля:</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NumberRoom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FloorNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FkTypeRoom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AmountSeats)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Isavaiable)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FkHotel)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumberRoom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FloorNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FkTypeRoom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AmountSeats)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Isavaiable)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FkHotel.HotelName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.NumberId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.NumberId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.NumberId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <!-- Header -->
+    @await Html.PartialAsync("HeaderPartial")
+
+    @await Html.PartialAsync("../Shared/Nav")
+
+    @await Html.PartialAsync("../Shared/FormLoginRegistrPartial")
+
+    <div style="padding: 21px 50px; margin-bottom: 20px; text-align: center; padding: 21px 50px; ">
+        @using (Html.BeginForm("Booking", "Hotel", FormMethod.Post, new { @class = "flex-box-booking" }))
+        {
+            <input id="searchNum" value="@ViewBag.FkHotelId" name="FkHotelId" readonly style="width:30px;"/>
+
+            <div class="cm-form-field__content">
+                <input id="DateCkeckIn"required="required" type="date" name="DateCheckIn" placeholder="Дата заезда">
+            </div>
+
+            <div class="cm-form-field__content">
+                <input id="DateCkeckOut" required="required" type="date" name="DateCheckOut" placeholder="Дата выезда">
+            </div>
+
+            <div class="cm-form-field__content">
+                <input id="searchNum" type="number" min="1" max="1000" name="AmountSeats" placeholder="Гости">
+            </div>
+
+            <div class="cm-form-field__content">
+                <button id="searchNum" style="padding: 16px;" type="submit">Подобрать номер</button>
+            </div>
+
+        }
+    </div>
+
+    <div class="table-container">
+        @foreach (var item in Model)
+        {
+            <div>
+                <h4>
+                    Номер: @Html.DisplayFor(modelItem => item.NumberRoom)
+                </h4>
+                <p>
+                    Этаж: @Html.DisplayFor(modelItem => item.FloorNumber)
+                </p>
+                <p>
+                    Тип комнаты: @Html.DisplayFor(modelItem => item.FkTypeRoom)
+                </p>
+                <p>
+                    Кол-во спален: @Html.DisplayFor(modelItem => item.AmountSeats)
+                </p>
+                <p>
+                    Цена: <span>@Html.DisplayFor(modelItem => item.Price)</span>
+                </p>
+                <p>
+                    Забронирован: @Html.DisplayFor(modelItem => item.Isavaiable)
+                </p>
+            </div>
+        }
+    </div>
+    <!-- Footer -->
+    @await Html.PartialAsync("FooterPartial")
+
+    @await Html.PartialAsync("../Shared/ScriptsPartial")
 </body>
 </html>

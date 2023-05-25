@@ -48,7 +48,7 @@ namespace SystemHotel.Controllers
                 c => c.FkCountryId == id || c.RegionId == 0).ToList());
         }
 
-        // GET: Hotel/Search
+        // POST: Hotel/Search
         public ActionResult Search(int id)
         {
             var hotel = findHotels.GetHotels();
@@ -59,12 +59,22 @@ namespace SystemHotel.Controllers
         [HttpGet]
         public ActionResult Booking(int Id)
         {
-            var num = numbersHotel.GetModels(Id);
+            var num = numbersHotel.GetNumbersHotel(Id);
+            ViewBag.FkHotelId = Id;
 
             return View(num.Result.Where(s => s.FkHotelId == Id).ToList());
         }
 
+        // POST: Hotel/Booking/?
+        [HttpPost]
+        public ActionResult Booking(BookedRoomModel booked, NumbersOfHotelModel numbers)
+        {
+            var num = numbersHotel.GetNumbersHotel(numbers.FkHotelId);
+            ViewBag.FkHotelId = numbers.FkHotelId;
 
+            return View(num.Result.Where(s => s.FkHotelId == numbers.FkHotelId &&
+                s.AmountSeats >= numbers.AmountSeats).ToList());
+        }
 
         // GET: Hotel/Details/5
         public ActionResult Details(int id)
