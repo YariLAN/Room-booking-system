@@ -10,7 +10,7 @@ namespace SystemHotel.Controllers
         private readonly UserService UserService = new UserService();
 
         [ModelStateMergeFilter]
-        [RestoreModelStateFromTempDataAttribute]
+        [RestoreModelStateFromTempData]
         public IActionResult Index()
         {
             return View();
@@ -19,8 +19,8 @@ namespace SystemHotel.Controllers
         // POST: Home/Profile
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ModelStateMergeFilterAttribute]
-        [RestoreModelStateFromTempDataAttribute]
+        [ModelStateMergeFilter]
+        [RestoreModelStateFromTempData]
         public async Task<IActionResult> Login(UserData logPass)
         {
             if (!ModelState.IsValid)
@@ -37,8 +37,8 @@ namespace SystemHotel.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ModelStateMergeFilterAttribute]
-        [RestoreModelStateFromTempDataAttribute]
+        [ModelStateMergeFilter]
+        [RestoreModelStateFromTempData]
         public async Task<IActionResult> Registration(MainDataUser newUser, UserData logPass)
         {
             if (await this.UserService.IsRegistered(logPass))

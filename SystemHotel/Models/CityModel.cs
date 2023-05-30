@@ -19,5 +19,11 @@ namespace SystemHotel.Models
             return await _dbContext.Cities.Select(
                     s => new CityModel(s.CityId, s.CityName, s.FkRegionId)).ToListAsync();
         }
+
+        public CityModel GetCityById(int id)
+        {
+            var city =_dbContext.Cities.FirstOrDefault(r => r.CityId == id);
+            return new CityModel(city.CityId, city.CityName, city.FkRegionId);
+        }
     }
 }

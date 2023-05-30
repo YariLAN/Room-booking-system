@@ -16,7 +16,7 @@ namespace SystemHotel
 
         public int HotelId { get; set; }
         public int FkCountryId { get; set; }
-        public int? FkRegionId { get; set; }
+        public int FkRegionId { get; set; }
         public int FkCityId { get; set; }
         public string StreetName { get; set; }
         public int HouseNumber { get; set; }

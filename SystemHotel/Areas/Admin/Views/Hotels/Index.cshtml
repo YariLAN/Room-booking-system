@@ -1,0 +1,95 @@
+﻿@model IEnumerable<SystemHotel.Models.HotelModel>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/MenuLayout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <h1>Hotels Page</h1>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Отели</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model=> model.StreetName)
+                        </th>                                 
+                        <th>                                   
+                            @Html.DisplayNameFor(model => model.HouseNumber)
+                        </th>                                  
+                        <th>                                   
+                            @Html.DisplayNameFor(model => model.FkHotelCategory)
+                        </th>                                  
+                        <th>                                   
+                            @Html.DisplayNameFor(model => model.FkCity)
+                        </th>                                  
+                        <th>                                   
+                            @Html.DisplayNameFor(model => model.FkCountry)
+                        </th>                                  
+                        <th>                                   
+                            @Html.DisplayNameFor(model => model.FkRegion)
+                        </th>                                  
+                        <th>                                   
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StreetName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HouseNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FkHotelCategory)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FkCity.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FkCountry.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FkRegion.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

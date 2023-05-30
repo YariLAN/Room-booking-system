@@ -356,5 +356,7 @@ namespace SystemHotel
         public DbSet<BookedRoomModel> BookedRoomModel { get; set; }
 
         public DbSet<NumbersOfHotelModel> NumbersOfHotelModel { get; set; }
+
+        public DbSet<SystemHotel.Models.HotelModel> HotelModel { get; set; }
     }
 }

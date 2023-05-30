@@ -25,8 +25,8 @@ namespace SystemHotel.Services
         public List<HotelModel> GetHotels()
         {
             return this.Hotels.Select
-              (s => new HotelModel(s.HotelId, s.HotelName, s.FkCityId, s.StreetName, s.HouseNumber))
-                .ToList();
+              (s => new HotelModel(s.HotelId, s.HotelName, s.FkCountryId, s.FkRegionId,
+                                    s.FkCityId, s.StreetName, s.HouseNumber)).ToList();
         }
     }
 }

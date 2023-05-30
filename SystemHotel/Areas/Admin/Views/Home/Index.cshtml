@@ -1,0 +1,46 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @await Html.PartialAsync("MetaTagsPartial")
+    @await Html.PartialAsync("CssPartial")
+</head>
+<body style="padding-top: 0;">
+    <div class="divHeader">
+        <h3>Панель администратора</h3>
+    </div>
+
+    <div class="signInAdmin">
+        @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+        {
+            <div class="cm-h3 mt-0 mb-12 pr-16">Вход</div>
+            <div class="validation-error-style">@Html.ValidationMessage("notSignIn")</div>
+
+            <div class="cm-form-field mb-16">
+                <div class="cm-form-field__content">
+                    <input required="required" type="text" name="Login" placeholder="Email / Логин Timeweb" class="cm-control cm-control--lg">
+                </div>
+            </div>
+
+            <div class="cm-form-field mb-8 cm-form-field--icon">
+                <div class="cm-form-field__content">
+                    <input required="required" type="password" name="Pass" placeholder="Пароль" class="cm-control cm-control--lg">
+                </div>
+            </div>
+
+            <div class="cm-form-field mb-12">
+                <div class="cm-form-field__content">
+                    <button type="submit" class="button button--lg wd-1">Войти</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Footer -->
+    @await Html.PartialAsync("FooterPartial")
+</body>
+</html>

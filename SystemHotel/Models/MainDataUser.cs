@@ -9,5 +9,7 @@ namespace SystemHotel.Models
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public DateTime DateOfBirth { get; set; }
+
+        public MainDataUser() { }
     }
 }

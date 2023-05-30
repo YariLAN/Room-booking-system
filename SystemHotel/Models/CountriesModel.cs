@@ -15,5 +15,11 @@ namespace SystemHotel.Models
             return await _dbContext.Countries.Select(
                     s => new CountriesModel(s.CountryId, s.CountryName)).ToListAsync();
         }
+
+        public CountriesModel GetCountryById(int id)
+        {
+            var country = _dbContext.Countries.FirstOrDefault(r => r.CountryId == id);
+            return new CountriesModel(country.CountryId, country.CountryName);
+        }
     }
 }

@@ -18,5 +18,11 @@ namespace SystemHotel.Models
             return await _dbContext.Regions.Select(
                     s => new RegionsModel(s.RegionId, s.RegionName, s.FkCountryId)).ToListAsync();
         }
+
+        public RegionsModel GetRegById(int id)
+        {
+            var reg = _dbContext.Regions.FirstOrDefault(r => r.RegionId == id);
+            return new RegionsModel(reg.RegionId, reg.RegionName, reg.FkCountryId);
+        }
     }
 }
