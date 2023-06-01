@@ -11,16 +11,19 @@ namespace SystemHotel.Models
         public List<CityModel> listOfcities { get; private set; }
         public List<RegionsModel> listOfregions { get; private set; }
         public List<CountriesModel> listOfcountries { get; private set; }
+        public List<CategoryModel> listOfcategories { get; private set; }
 
         public async Task Inisializate()
         {
             var cm = new CityModel();
             var rm = new RegionsModel();
             var gosm = new CountriesModel();
+            var cat = new CategoryModel();
 
             this.listOfcities = await cm.GetEntities();
             this.listOfregions = await rm.GetEntities();
             this.listOfcountries = await gosm.GetEntities();
+            this.listOfcategories = await cat.GetCategories();
 
             return;
         }

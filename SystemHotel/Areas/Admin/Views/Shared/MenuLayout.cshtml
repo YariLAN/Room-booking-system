@@ -10,9 +10,8 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
-
     <!-- Theme style -->
-    <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="~/dist/css/adminlte.css">
 </head>
 <body class="hold-transition sidebar-mini">
 
@@ -169,7 +168,7 @@
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 3.2.0
             </div>
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2014-2021</strong> All rights reserved.
         </footer>
     </div>
     <!-- ./wrapper -->
@@ -181,5 +180,7 @@
     <script src="../../dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../../dist/js/demo.js"></script>
+
+    @await Html.PartialAsync("../../../../Views/Shared/ScriptsPartial.cshtml") 
 </body>
 </html>

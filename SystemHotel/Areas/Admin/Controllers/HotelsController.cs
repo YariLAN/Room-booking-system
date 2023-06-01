@@ -1,22 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using SystemHotel.Models;
 using SystemHotel.Services;
+using SystemHotel.Controllers;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 
 namespace SystemHotel.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class HotelsController : Controller
     {
+        IWebHostEnvironment _appEnvironment;
+        private HotelController _hotelCont = new HotelController();
         private readonly FindHotelsService findHotels = new FindHotelsService();
 
-        public HotelsController(HotelContext context) {}
+        public HotelsController(IWebHostEnvironment appEnvironment) 
+        {
+            _appEnvironment = appEnvironment;
+        }
 
         // GET: Admin/HotelModels
         public IActionResult Index()
@@ -45,28 +50,38 @@ namespace SystemHotel.Areas.Admin.Controllers
         // GET: Admin/HotelModels/Create
         public IActionResult Create()
         {
-            ViewData["FkCityId"] = new SelectList(findHotels.Cities, "CityId", "CityName");
-            ViewData["FkCountryId"] = new SelectList(findHotels.Countries, "CountryId", "CountryName");
-            ViewData["FkRegionId"] = new SelectList(findHotels.Regions, "RegionId", "RegionName");
-            return View();
+            return _hotelCont.actionSearch();
         }
 
+        // GET: HotelModels/GetCities/
+        public ActionResult GetCities(int id)
+        {
+            return _hotelCont.GetCities(id);
+        }
+
+        // GET: HotelModels/GetCountries/
+        public ActionResult GetRegions(int id)
+        {
+            return _hotelCont.GetRegions(id);
+        }
+
+
         // POST: Admin/HotelModels/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FkCountryId,FkRegionId,FkCityId,StreetName,HouseNumber,FkHotelCategory,Id,Name")] HotelModel hotelModel)
+        public async Task<IActionResult> Create(HotelModel hotelModel, [FromForm] Images img)
         {
+
             if (ModelState.IsValid)
             {
-                findHotels.Add(hotelModel);
-                await findHotels.SaveChangesAsync();
+                await findHotels.AddHotelAsync(hotelModel, img, _appEnvironment);
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["FkCityId"] = new SelectList(findHotels.Cities, "CityId", "CityName", hotelModel.FkCityId);
             ViewData["FkCountryId"] = new SelectList(findHotels.Countries, "CountryId", "CountryName", hotelModel.FkCountryId);
             ViewData["FkRegionId"] = new SelectList(findHotels.Regions, "RegionId", "RegionName", hotelModel.FkRegionId);
+
             return View(hotelModel);
         }
 

@@ -1,66 +1,82 @@
 ﻿@model SystemHotel.Models.HotelModel
 
 @{
-    Layout = null;
+    Layout = "~/Areas/Admin/Views/Shared/MenuLayout.cshtml";
 }
 
-<!DOCTYPE html>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <h1>Add Hotel</h1>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-</head>
-<body>
+<!-- Main content -->
+<section class="content">
 
-<h4>HotelModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FkCountryId" class="control-label"></label>
-                <select asp-for="FkCountryId" class ="form-control" asp-items="ViewBag.FkCountryId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="FkRegionId" class="control-label"></label>
-                <select asp-for="FkRegionId" class ="form-control" asp-items="ViewBag.FkRegionId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="FkCityId" class="control-label"></label>
-                <select asp-for="FkCityId" class ="form-control" asp-items="ViewBag.FkCityId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="StreetName" class="control-label"></label>
-                <input asp-for="StreetName" class="form-control" />
-                <span asp-validation-for="StreetName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HouseNumber" class="control-label"></label>
-                <input asp-for="HouseNumber" class="form-control" />
-                <span asp-validation-for="HouseNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FkHotelCategory" class="control-label"></label>
-                <input asp-for="FkHotelCategory" class="form-control" />
-                <span asp-validation-for="FkHotelCategory" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="row">
+        <div class="col-md-4">
+            @using (Html.BeginForm("Create", "Hotels", FormMethod.Post, new {enctype = "multipart/form-data"}))
+            {
+                <fieldset style="padding: 5px 40px; margin-top: 10px;" class="field-flex">
+                    <div>
+                        <div class="form-group">
+                            <label asp-for="FkCountryId" class="control-label">Страна</label>
+                            @Html.DropDownList("FkCountryId", ViewBag.Countries as SelectList,
+                                                 new { id = "country", @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="FkRegionId" class="control-label">Регион</label>
+                            @Html.DropDownList("FkRegionId", ViewBag.Regions as SelectList,
+                                                 new { id = "region", @class = "form-control" })
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label name="FkCityId" class="control-label">Город</label>
+                            @Html.DropDownList("FkCityId", ViewBag.Cities as SelectList,
+                                                 new { id = "city", @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="StreetName" class="control-label">Улица</label>
+                            <input name="StreetName" class="form-control" required="required" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="HouseNumber" class="control-label">Номер дома</label>
+                            <input name="HouseNumber" class="form-control" required="required" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="FkHotelCategory" class="control-label">Категория гостиницы</label>
+                            @Html.DropDownList("FkHotelCategory", ViewBag.Category as SelectList,
+                                                 new { id = "category", @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label">Название гостиницы</label>
+                            <input name="Name" class="form-control" required="required" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="MyImage" class="control-label">Примерное фото гостиницы</label>
+                            <input name="MyImage" style="padding-bottom: 35px;" type="file" class="form-control" required="required" accept="image/jpeg" />
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </div>
+
+
+                </fieldset>
+            }
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-</body>
-</html>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</section>

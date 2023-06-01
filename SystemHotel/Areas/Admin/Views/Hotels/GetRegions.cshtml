@@ -1,0 +1,11 @@
+﻿@model IEnumerable<SystemHotel.Regions>
+
+<select id="region" name="FkRegionId" class="form-control">
+    @foreach (var item in Model)
+    {
+        if (item is SystemHotel.Regions)
+        {
+            <option value="@item.RegionId">@item.RegionName</option>
+        }
+    }
+</select>

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using SystemHotel.Models;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
@@ -254,11 +253,11 @@ namespace SystemHotel
 
                 entity.ToTable("images");
 
-                entity.Property(e => e.ImageId)
-                    .HasColumnName("image_id")
-                    .UseIdentityAlwaysColumn();
+                entity.Property(e => e.ImageId).HasColumnName("image_id");
 
                 entity.Property(e => e.FkCityId).HasColumnName("fk_city_id");
+
+                entity.Property(e => e.FkHotelId).HasColumnName("fk_hotel_id");
 
                 entity.Property(e => e.ImageName)
                     .IsRequired()
@@ -269,6 +268,12 @@ namespace SystemHotel
                     .HasForeignKey(d => d.FkCityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("images_fk_city_id_fkey");
+
+                entity.HasOne(d => d.FkHotel)
+                    .WithMany(p => p.Images)
+                    .HasForeignKey(d => d.FkHotelId)
+                    //.OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("images_fk_hotel_id_fkey");
             });
 
             modelBuilder.Entity<NumbersOfHotel>(entity =>

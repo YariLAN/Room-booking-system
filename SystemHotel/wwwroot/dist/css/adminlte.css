@@ -2014,6 +2014,7 @@ pre code {
 }
 
 .form-control {
+  margin: 5px 0px 15px 0px;
   display: block;
   width: 100%;
   height: calc(2.25rem + 2px);
@@ -11863,7 +11864,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 .content-header {
-  padding: 15px 0.5rem;
+  padding: 24px 3.5rem;
 }
 
 .text-sm .content-header {
@@ -53010,3 +53011,29 @@ a.text-muted:hover {
   border-color: #4b545c !important;
 }
 /*# sourceMappingURL=adminlte.css.map */
+
+.treeview {
+    position: relative;
+    display: inline-block;
+}
+
+.treeview-menu {
+    display: none;
+    position: absolute;
+    background-color: #c9f9c1;
+    min-width: 235px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 20px;
+    list-style: none;
+    border: solid 2px #a5d59d;
+    z-index: 1;
+}
+
+.treeview:hover .treeview-menu {
+    display: block;
+}
+
+.field-flex {
+    display: flex;
+
+}

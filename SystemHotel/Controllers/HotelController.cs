@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace SystemHotel.Controllers
 {
     public class HotelController : Controller
     {
+        public HotelController() : base() { }
+
         private readonly FindHotelsService findHotels = new FindHotelsService();
         private readonly NumbersHotelService numbersHotel = new NumbersHotelService();
        
@@ -31,21 +34,28 @@ namespace SystemHotel.Controllers
             ViewBag.Cities = new SelectList(lstModels.Result.listOfcities.Where(
                 c => c.FkRegionId == selectedIndex || c.Id == 0), "Id", "Name");
 
+            ViewBag.Category = new SelectList(
+                lstModels.Result.listOfcategories, "Id", "Name", selectedIndex);
+
             return View();
         }
 
-        // GET: Hotel/GetCities/
+        // GET: Hotel/GetCities/id
         public ActionResult GetCities(int id)
         {
-            return PartialView(findHotels.Cities.Where(
-                c => c.FkRegionId == id || c.CityId == 0).ToList());
+            var city = findHotels.Cities.Where(
+                c => c.FkRegionId == id || c.CityId == 0).ToList();
+
+            return PartialView(city);
         }
 
-        // GET: Hotel/GetCountries/
+        // GET: Hotel/GetCountries/id
         public ActionResult GetRegions(int id)
         {
-            return PartialView(findHotels.Regions.Where(
-                c => c.FkCountryId == id || c.RegionId == 0).ToList());
+            var reg = findHotels.Regions.Where(
+                c => c.FkCountryId == id || c.RegionId == 0).ToList();
+
+            return PartialView(reg);
         }
 
         // POST: Hotel/Search

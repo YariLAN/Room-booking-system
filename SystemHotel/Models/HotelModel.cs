@@ -28,14 +28,14 @@ namespace SystemHotel.Models
         public ImageModel Img {
             get
             {
-                var img = new ImageModel().GetImg(FkCityId, $"{FkCityId} {Id}.jpg");
+                var img = new ImageModel().GetImg(Id);
                 if (img == null)
                 {
-                    return new ImageModel(0, 0);
+                    return new ImageModel(0, 0, "", 0);
                 }
                 return img;
             }
-            private set { }
+            set { }
         }
 
         public CityModel FkCity { 
@@ -76,6 +76,18 @@ namespace SystemHotel.Models
             }
             private set { }
         }
+
+        public int GetIdByName(string name)
+        {
+            var hotel = _dbContext.Hotels.Select(
+                    s => new HotelModel(s.HotelId, s.HotelName,
+                    s.FkCountryId, s.FkRegionId, s.FkCityId, s.StreetName, s.HouseNumber)
+                ).ToList().FirstOrDefault(l => l.Name == name);
+
+            return hotel.Id;
+        }
+
+
         public ICollection<NumbersOfHotel> NumbersOfHotel { get; set; }
     }
 }

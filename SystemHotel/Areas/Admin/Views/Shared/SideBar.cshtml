@@ -20,10 +20,6 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-                     with font-awesome or any other icon font library -->
-
-
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-table"></i>
@@ -70,20 +66,16 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index","Hotels")" class="nav-link">
-                                <p>
-                                    Отели
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
+                        <li class="treeview">
+                            <a href="#" class="nav-link">
+                                <i class="fa fa-user"></i><span>Отели          ></span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="../examples/login.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Login v1</p>
-                                    </a>
-                                </li>
+                            <ul class="treeview-menu">
+                                <li><a href="@Url.Action("Index","Hotels")">Список отелей</a></li>
+                                <li><a href="@Url.Action("Create","Hotels")">Добавить отель</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">

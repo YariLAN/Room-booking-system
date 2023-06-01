@@ -11,6 +11,7 @@ namespace SystemHotel
     {
         public Hotels()
         {
+            Images = new HashSet<Images>();
             NumbersOfHotel = new HashSet<NumbersOfHotel>();
         }
 
@@ -23,10 +24,24 @@ namespace SystemHotel
         public string HotelName { get; set; }
         public int FkHotelCategory { get; set; }
 
+        public Hotels(int id, int coun, int reg, int city, 
+            string street, int hou, string name, int cat) 
+        {
+            HotelId = id;
+            FkCountryId = coun;
+            FkRegionId = reg;
+            FkCityId = city;
+            StreetName = street;
+            HouseNumber = hou;
+            HotelName = name;
+            FkHotelCategory = cat;
+        }
+
         public virtual Cities FkCity { get; set; }
         public virtual Countries FkCountry { get; set; }
         public virtual Categotyofhotels FkHotelCategoryNavigation { get; set; }
         public virtual Regions FkRegion { get; set; }
+        public virtual ICollection<Images> Images { get; set; }
         public virtual ICollection<NumbersOfHotel> NumbersOfHotel { get; set; }
     }
 }
