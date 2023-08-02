@@ -16,13 +16,14 @@ namespace SystemHotel.Models
        
         public HotelModel() : base() { }
         public HotelModel(int id, string nm, int country, int reg,
-            int city, string street, int house) : base(id, nm)
+            int city, string street, int house, int category) : base(id, nm)
         {
             this.FkCountryId = country;
             this.FkRegionId = reg;
             this.FkCityId = city;
             this.StreetName = street;
             this.HouseNumber = house;
+            this.FkHotelCategory = category;
         }
 
         public ImageModel Img {
@@ -81,12 +82,11 @@ namespace SystemHotel.Models
         {
             var hotel = _dbContext.Hotels.Select(
                     s => new HotelModel(s.HotelId, s.HotelName,
-                    s.FkCountryId, s.FkRegionId, s.FkCityId, s.StreetName, s.HouseNumber)
+                    s.FkCountryId, s.FkRegionId, s.FkCityId, s.StreetName, s.HouseNumber, s.FkHotelCategory)
                 ).ToList().FirstOrDefault(l => l.Name == name);
 
             return hotel.Id;
         }
-
 
         public ICollection<NumbersOfHotel> NumbersOfHotel { get; set; }
     }

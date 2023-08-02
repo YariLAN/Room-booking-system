@@ -50,7 +50,9 @@ namespace SystemHotel.Areas.Admin.Controllers
         // GET: Admin/HotelModels/Create
         public IActionResult Create()
         {
-            return _hotelCont.actionSearch();
+            SetViewBagsHotel();
+
+            return View();
         }
 
         // GET: HotelModels/GetCities/
@@ -65,25 +67,42 @@ namespace SystemHotel.Areas.Admin.Controllers
             return _hotelCont.GetRegions(id);
         }
 
-
         // POST: Admin/HotelModels/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(HotelModel hotelModel, [FromForm] Images img)
+        public async Task<IActionResult> Create(HotelModel hM, [FromForm] Images img)
         {
 
             if (ModelState.IsValid)
             {
-                await findHotels.AddHotelAsync(hotelModel, img, _appEnvironment);
+                await findHotels.AddHotelAsync(hM, img, _appEnvironment);
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["FkCityId"] = new SelectList(findHotels.Cities, "CityId", "CityName", hotelModel.FkCityId);
-            ViewData["FkCountryId"] = new SelectList(findHotels.Countries, "CountryId", "CountryName", hotelModel.FkCountryId);
-            ViewData["FkRegionId"] = new SelectList(findHotels.Regions, "RegionId", "RegionName", hotelModel.FkRegionId);
+            ViewData["FkCityId"] = new SelectList(findHotels.Cities, "CityId", "CityName", hM.FkCityId);
+            ViewData["FkCountryId"] = new SelectList(findHotels.Countries, "CountryId", "CountryName", hM.FkCountryId);
+            ViewData["FkRegionId"] = new SelectList(findHotels.Regions, "RegionId", "RegionName", hM.FkRegionId);
 
-            return View(hotelModel);
+            return View(hM);
         }
+
+        public void SetViewBagsHotel(int countryId = 1, int cityId = 1, int regionId = 1, int category = 1)
+        {
+            var lstModels = findHotels.GetDropDownList();
+
+            ViewBag.Countries = new SelectList(
+                lstModels.Result.listOfcountries, "Id", "Name", countryId);
+
+            ViewBag.Regions = new SelectList(lstModels.Result.listOfregions.Where(
+                b => b.FkCountryId == countryId || b.Id == 0), "Id", "Name", regionId);
+
+            ViewBag.Cities = new SelectList(lstModels.Result.listOfcities.Where(
+                c => c.FkRegionId == regionId || c.Id == 0), "Id", "Name", cityId);
+
+            ViewBag.Category = new SelectList(
+                lstModels.Result.listOfcategories, "Id", "Name", category);
+        }
+
 
         // GET: Admin/HotelModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -93,15 +112,15 @@ namespace SystemHotel.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var hotelModel = await findHotels.HotelModel.FindAsync(id);
-            if (hotelModel == null)
+            var hM = await findHotels.GetHotel(id);
+            if (hM == null)
             {
                 return NotFound();
             }
-            ViewData["FkCityId"] = new SelectList(findHotels.Cities, "CityId", "CityName", hotelModel.FkCityId);
-            ViewData["FkCountryId"] = new SelectList(findHotels.Countries, "CountryId", "CountryName", hotelModel.FkCountryId);
-            ViewData["FkRegionId"] = new SelectList(findHotels.Regions, "RegionId", "RegionName", hotelModel.FkRegionId);
-            return View(hotelModel);
+
+            SetViewBagsHotel(hM.FkCountryId, hM.FkCityId, hM.FkRegionId, hM.FkHotelCategory);
+
+            return View(hM);
         }
 
         // POST: Admin/HotelModels/Edit/5
@@ -109,9 +128,9 @@ namespace SystemHotel.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FkCountryId,FkRegionId,FkCityId,StreetName,HouseNumber,FkHotelCategory,Id,Name")] HotelModel hotelModel)
+        public async Task<IActionResult> Edit(int id, HotelModel hM, [FromForm] [Bind("MyImage")] Images img)
         {
-            if (id != hotelModel.Id)
+            if (id != hM.Id)
             {
                 return NotFound();
             }
@@ -120,12 +139,11 @@ namespace SystemHotel.Areas.Admin.Controllers
             {
                 try
                 {
-                    findHotels.Update(hotelModel);
-                    await findHotels.SaveChangesAsync();
+                    await findHotels.UpdateHotelAsync(hM, _appEnvironment, img);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HotelModelExists(hotelModel.Id))
+                    if (!HotelModelExists(hM.Id))
                     {
                         return NotFound();
                     }
@@ -136,10 +154,10 @@ namespace SystemHotel.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FkCityId"] = new SelectList(findHotels.Cities, "CityId", "CityName", hotelModel.FkCityId);
-            ViewData["FkCountryId"] = new SelectList(findHotels.Countries, "CountryId", "CountryName", hotelModel.FkCountryId);
-            ViewData["FkRegionId"] = new SelectList(findHotels.Regions, "RegionId", "RegionName", hotelModel.FkRegionId);
-            return View(hotelModel);
+
+            SetViewBagsHotel(hM.FkCountryId, hM.FkCityId, hM.FkRegionId, hM.FkHotelCategory);
+
+            return View(hM);
         }
 
         // GET: Admin/HotelModels/Delete/5

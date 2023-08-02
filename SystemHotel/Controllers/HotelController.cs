@@ -17,25 +17,28 @@ namespace SystemHotel.Controllers
 
         private readonly FindHotelsService findHotels = new FindHotelsService();
         private readonly NumbersHotelService numbersHotel = new NumbersHotelService();
-       
+
+        public void SetViewBagsHotel(int countryId = 1, int cityId = 1, int regionId = 1, int category = 1)
+        {
+            var lstModels = findHotels.GetDropDownList();
+
+            ViewBag.Countries = new SelectList(
+                lstModels.Result.listOfcountries, "Id", "Name", countryId);
+
+            ViewBag.Regions = new SelectList(lstModels.Result.listOfregions.Where(
+                b => b.FkCountryId == countryId || b.Id == 0), "Id", "Name", regionId);
+
+            ViewBag.Cities = new SelectList(lstModels.Result.listOfcities.Where(
+                c => c.FkRegionId == regionId || c.Id == 0), "Id", "Name", cityId);
+
+            ViewBag.Category = new SelectList(
+                lstModels.Result.listOfcategories, "Id", "Name", category);
+        }
+
         // GET: Hotel_Controller
         public ActionResult actionSearch()
         {
-            var lstModels = findHotels.GetDropDownList();
-            
-            int selectedIndex = 1;
-
-            ViewBag.Countries = new SelectList(
-                lstModels.Result.listOfcountries, "Id", "Name", selectedIndex);
-
-            ViewBag.Regions = new SelectList(lstModels.Result.listOfregions.Where(
-                b => b.FkCountryId == selectedIndex || b.Id == 0), "Id", "Name", selectedIndex);
-
-            ViewBag.Cities = new SelectList(lstModels.Result.listOfcities.Where(
-                c => c.FkRegionId == selectedIndex || c.Id == 0), "Id", "Name");
-
-            ViewBag.Category = new SelectList(
-                lstModels.Result.listOfcategories, "Id", "Name", selectedIndex);
+            SetViewBagsHotel();
 
             return View();
         }

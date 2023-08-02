@@ -26,4 +26,3 @@ login.onclick = function () {
     formRegistr.classList.remove("is-open");
     formLogin.classList.add("is-open");
 }
-

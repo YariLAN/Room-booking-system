@@ -1,20 +1,16 @@
 ﻿$(function () {
 
-    $('#country').change(function () {
-        var id = $(this).val();
-        $.ajax({
-            type: 'GET',
-            url: 'GetRegions/' + id,
-            success: function (data) {
+    pathReg = 'GetRegions/'
+    pathRegAdmin = '../GetRegions/'
 
-                $('#region').replaceWith(data);
+    pathCity = 'GetCities/'
+    pathCityAdmin = '../GetCities/'
 
-                $(getCities());
-            }
-        });
-    });
+    $(getRegions(pathReg, pathCity))
+    $(getRegions(pathRegAdmin, pathCityAdmin))
 
-    $(getCities());
+    $(getCities(pathCity));
+    $(getCities(pathCityAdmin));
 
     $('#searchHotel').click(function () {
         var cityId = $("#city").val();
@@ -28,13 +24,30 @@
     })
 })
 
-function getCities() {
+function getRegions(pathReg, pathCity) {
+
+    $('#country').change(function () {
+        var id = $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: pathReg + id,
+            success: function (data) {
+
+                $('#region').replaceWith(data);
+
+                $(getCities(pathCity));
+            }
+        });
+    });
+}
+
+function getCities(pathCity) {
     $('#region').change(function () {
         // получаем выбранный id
         var idReg = $(this).val();
         $.ajax({
             type: 'GET',
-            url: 'GetCities/' + idReg,
+            url: pathCity + idReg,
             success: function (data) {
 
                 // заменяем содержимое присланным частичным представлением

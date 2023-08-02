@@ -1,70 +1,85 @@
 ﻿@model SystemHotel.Models.HotelModel
 
 @{
-    Layout = null;
+    Layout = "~/Areas/Admin/Views/Shared/MenuLayout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
-
-<h4>HotelModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FkCountryId" class="control-label"></label>
-                <select asp-for="FkCountryId" class="form-control" asp-items="ViewBag.FkCountryId"></select>
-                <span asp-validation-for="FkCountryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FkRegionId" class="control-label"></label>
-                <select asp-for="FkRegionId" class="form-control" asp-items="ViewBag.FkRegionId"></select>
-                <span asp-validation-for="FkRegionId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FkCityId" class="control-label"></label>
-                <select asp-for="FkCityId" class="form-control" asp-items="ViewBag.FkCityId"></select>
-                <span asp-validation-for="FkCityId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StreetName" class="control-label"></label>
-                <input asp-for="StreetName" class="form-control" />
-                <span asp-validation-for="StreetName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HouseNumber" class="control-label"></label>
-                <input asp-for="HouseNumber" class="form-control" />
-                <span asp-validation-for="HouseNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FkHotelCategory" class="control-label"></label>
-                <input asp-for="FkHotelCategory" class="form-control" />
-                <span asp-validation-for="FkHotelCategory" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <h1>Edit Hotel</h1>
+        </div>
     </div>
-</div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-4">
+            @using (Html.BeginForm("Edit", "Hotels", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <fieldset style="padding: 5px 40px; margin-top: 10px;" class="field-flex">
+                    <div>
+                        <div class="form-group">
+                            <label asp-for="FkCountryId" class="control-label">Страна</label>
+                            @Html.DropDownList("FkCountryId", ViewBag.Countries as SelectList,
+                        new { id = "country", @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="FkRegionId" class="control-label">Регион</label>
+                            @Html.DropDownList("FkRegionId", ViewBag.Regions as SelectList,
+                        new { id = "region", @class = "form-control" })
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label name="FkCityId" class="control-label">Город</label>
+                            @Html.DropDownList("FkCityId", ViewBag.Cities as SelectList,
+                        new { id = "city", @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="StreetName" class="control-label">Улица</label>
+                            <input name="StreetName" value="@Model.StreetName" class="form-control" required="required" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="HouseNumber" class="control-label">Номер дома</label>
+                            <input name="HouseNumber" value="@Model.HouseNumber" class ="form-control" required="required" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="FkHotelCategory" class="control-label">Категория гостиницы</label>
+                            @Html.DropDownList("FkHotelCategory", ViewBag.Category as SelectList,
+                        new { id = "category", @class = "form-control" })
+                        </div>
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label">Название гостиницы</label>
+                            <input name="Name" value="@Model.Name" class="form-control" required="required" type="text/plain" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="MyImage" class="control-label">Примерное фото гостиницы</label>
+
+                            <input id="files" name="MyImage" style="padding-bottom: 35px;" type="file" class="form-control" accept="image/jpeg" />
+                            <img src="~/img/@Model.Img.Name" id="img" class="imgHotel" />
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Edit" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </fieldset>
+            }
+        </div>
+    </div>
+</section>
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-</body>
-</html>
