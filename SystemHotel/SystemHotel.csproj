@@ -7,6 +7,7 @@
   <ItemGroup>
     <Content Remove="bundleconfig.json" />
     <Content Remove="compilerconfig.json" />
+    <Content Remove="wwwroot\js\deleteForm.js" />
   </ItemGroup>
 
   <ItemGroup>

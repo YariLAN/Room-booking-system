@@ -110,5 +110,25 @@ namespace SystemHotel.Services
             this.Hotels.Update(h);
             await this.SaveChangesAsync();
         }
+
+        public async Task DeleteHotelAsync(HotelModel hM)
+        {
+            Hotels h = new Hotels(
+                hM.Id, hM.FkCountryId, hM.FkRegionId, hM.FkCityId,
+                hM.StreetName, hM.HouseNumber, hM.Name, hM.FkHotelCategory
+            );
+
+            if(hM.Img != null)
+            {
+                DeleteImgFromFolder(hM.Img);
+                var img = new Images(hM.Img.Id, hM.FkCityId, hM.Img.Name, hM.Id);
+
+                this.Images.Remove(img);
+                await this.SaveChangesAsync();
+            }
+
+            this.Hotels.Remove(h);
+            await this.SaveChangesAsync();
+        }
     }
 }

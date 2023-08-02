@@ -82,12 +82,14 @@
                                 @Html.DisplayFor(modelItem => item.Name)
                             </td>
                             <td>
-                                <a href=@Url.Action("Edit","Hotels")/@item.Id>Edit</a>
+                                <a href=@Url.Action("Edit","Hotels")/@item.Id>Edit</a> |
+                                <a href=@Url.Action("Delete","Hotels")/@item.Id id="delete">Delete</a>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
+
     </div>
 </section>

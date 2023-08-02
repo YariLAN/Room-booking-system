@@ -8,6 +8,7 @@ using SystemHotel.Services;
 using SystemHotel.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using System;
 
 namespace SystemHotel.Areas.Admin.Controllers
 {
@@ -103,7 +104,6 @@ namespace SystemHotel.Areas.Admin.Controllers
                 lstModels.Result.listOfcategories, "Id", "Name", category);
         }
 
-
         // GET: Admin/HotelModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -168,11 +168,8 @@ namespace SystemHotel.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var hotelModel = await findHotels.HotelModel
-                .Include(h => h.FkCity)
-                .Include(h => h.FkCountry)
-                .Include(h => h.FkRegion)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var hotelModel = await findHotels.GetHotel(id);
+
             if (hotelModel == null)
             {
                 return NotFound();
@@ -186,9 +183,9 @@ namespace SystemHotel.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var hotelModel = await findHotels.HotelModel.FindAsync(id);
-            findHotels.HotelModel.Remove(hotelModel);
-            await findHotels.SaveChangesAsync();
+            var hM = await findHotels.GetHotel(id);
+            await findHotels.DeleteHotelAsync(hM);
+
             return RedirectToAction(nameof(Index));
         }
 
